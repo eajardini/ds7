@@ -1,4 +1,4 @@
-# cap2.3/c_load/loadCliente.py
+# cap2.3/c_load/loadVendedor.py
 
 import pandas as pd
 import psycopg2
@@ -18,28 +18,24 @@ db_params = {
 }
 
 create_table_query = '''
-CREATE TABLE IF NOT EXISTS bi_dclientes (
-    dclienteID BIGSERIAL PRIMARY KEY,
-    codigo_cliente integer, 
-    nome_cliente varchar, 
-    endereco varchar, 
-    cidade varchar, 
-    cep varchar, 
-    uf char(2)
+CREATE TABLE IF NOT EXISTS bi_dvendedores (
+    dvendedorID BIGSERIAL PRIMARY KEY,
+    codigo_vendedor integer, 
+    nome_vendedor varchar, 
+    salario_fixo numeric(9,2),     
+    faixa_comissao char(1)
     );        
     '''
 
 insert_query = '''
-INSERT INTO bi_dclientes (
-    dclienteID,
-    codigo_cliente,
-    nome_cliente,
-    endereco,
-    cidade,
-    cep,
-    uf
+INSERT INTO bi_dvendedores (
+    dvendedorID,
+    codigo_vendedor,
+    nome_vendedor,
+    salario_fixo,
+    faixa_comissao    
 )
-VALUES (default, %s, %s, %s, %s, %s, %s)
+VALUES (default, %s, %s, %s, %s)
 '''
 
 
@@ -50,7 +46,7 @@ def createTableBI(connPar):
 
     return 1
   except Exception as e:
-    print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
+    print(f"[loadVendedor.py|executeTransform] Ocorreu um erro: {e}")
     return None
 
 
@@ -59,19 +55,17 @@ def insertTableBI(connPar, dfPar):
     cur = connPar.cursor()  
     for _, row in dfPar.iterrows():
       # Necessário para inserir somente IDs que  ainda não estão no banco de dados.
-      cur.execute("SELECT dclienteID FROM bi_dclientes where codigo_cliente = %s", (row['codigo_cliente'],))
+      cur.execute("SELECT dvendedorID FROM bi_dvendedores where codigo_vendedor = %s", (row['codigo_vendedor'],))
       existing_id = cur.fetchone()    
       if existing_id == None:
         cur.execute(insert_query, (
-            row['codigo_cliente'],
-            row['nome_cliente'],
-            row['endereco'],
-            row['cidade'],
-            row['cep'],
-            row['uf']                    
+            row['codigo_vendedor'],
+            row['nome_vendedor'],
+            row['salario_fixo'],
+            row['faixa_comissao']            
       ))
   except Exception as e:
-        print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
+        print(f"[loadVendedor.py|executeTransform] Ocorreu um erro: {e}")
         return None
 
   connPar.commit()
@@ -80,7 +74,7 @@ def insertTableBI(connPar, dfPar):
 
 def executeLoad(dfPar):  
   try:
-    print(f"Etapa: Carregando Clientes para o banco de dados")
+    print(f"Etapa: Carregando Vendedores para o banco de dados")
     # Conecta com o Postgres
     conn = psycopg2.connect(**db_params)    
     createTableBI(conn)
@@ -88,5 +82,5 @@ def executeLoad(dfPar):
 
     return dfPar
   except Exception as e:
-        print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
+        print(f"[loadVendedor.py|executeTransform] Ocorreu um erro: {e}")
         return None
