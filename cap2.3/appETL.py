@@ -17,8 +17,20 @@ from a_extract.extProduto import executeExtract as prodExecuteExtract
 from b_transform.transProduto import executeTransform as prodExecuteTransform
 from c_load.loadProduto  import executeLoad as prodExecuteLoad
 
+# ETL Tempo
+from c_load.loadTempo  import executeLoad as tempoExecuteLoad
 
-#******** ETL Cliente *******
+# ETL Pedido
+from a_extract.extPedido import executeExtract as pedExecuteExtract
+from b_transform.transPedido import executeTransform as pedExecuteTransform
+# from c_load.loadProduto  import executeLoad as prodExecuteLoad
+
+
+
+
+
+
+#******** ETL CLIENTE *******
 # Chama a função para EXTRAIR os dados
 
 print("++++++++++")
@@ -54,7 +66,7 @@ if df_cliResults is None:
 #     print (f"Valor do DF após carregamento no banco de dados: ")
 
 
-#******** ETL Vendedor *******
+#******** ETL VENDEDOR *******
 # Chama a função para EXTRAIR os dados
 print("++++++++++")
 df_vendResults = vendExecuteExtract()
@@ -89,7 +101,10 @@ if df_vendResults is None:
 
 
 
-#******** ETL Produto *******
+
+
+
+#******** ETL PRODUTO *******
 # Chama a função para EXTRAIR os dados
 
 print("++++++++++")
@@ -123,3 +138,65 @@ if df_prodResults is None:
     quit()
 # else:    
 #     print (f"Valor do DF após carregamento no banco de dados: ")
+
+
+
+
+
+#******** ETL TEMPO *******
+#**** Há somente a etapa de criar a dimensão tempo
+print("++++++++++")
+# Chama a função para CARREGAR os dados bo banco de dados
+df_tempoResults = tempoExecuteLoad()
+
+# Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
+if df_tempoResults is None:
+    print("[appETLpy] Falha a executar o carregamento para o banco de dados de TEMPO")
+    quit()
+# else:    
+#     print (f"Valor do DF após carregamento no banco de dados: ")
+
+
+
+
+
+#******** ETL PEDIDO *******
+# Chama a função para EXTRAIR os dados
+
+print("++++++++++")
+df_pedResults = pedExecuteExtract()
+
+# Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
+if df_pedResults is None:
+    print("[appETLpy] Falha a executar a extração de PEDIDOS")
+    quit()
+else:  
+    print(f"Valor do DF após extração Head: \n {df_pedResults.head()}")  
+    print(f"Valor do DF após extração NULLs: \n {df_pedResults[df_pedResults.isnull().any(axis=1)]}")
+    print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
+
+
+# Chama a função para TRANSFORMAR os dados
+df_pedResults = pedExecuteTransform(df_pedResults)
+
+# Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
+if df_pedResults is None:
+    print("[appETLpy] Falha a executar a transformação de PEDIDOS")
+    quit()
+else:    
+    print(f"Valor do DF após transformação: \n {df_pedResults.head()}")
+    print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
+
+
+##### Chama a função para CARREGAR os dados bo banco de dados
+####df_prodResults = prodExecuteLoad(df_prodResults)
+####
+##### Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
+####if df_prodResults is None:
+####    print("[appETLpy] Falha a executar o carregamento para o banco de dados de PRODUTOS")
+####    quit()
+##### else:    
+#####     print (f"Valor do DF após carregamento no banco de dados: ")
+####
+
+

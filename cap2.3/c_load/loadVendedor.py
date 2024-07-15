@@ -19,7 +19,7 @@ db_params = {
 
 create_table_query = '''
 CREATE TABLE IF NOT EXISTS bi_dvendedores (
-    dvendedorID BIGSERIAL PRIMARY KEY,
+    dvendedor_sk BIGSERIAL PRIMARY KEY,
     codigo_vendedor integer, 
     nome_vendedor varchar, 
     salario_fixo numeric(9,2),     
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS bi_dvendedores (
 
 insert_query = '''
 INSERT INTO bi_dvendedores (
-    dvendedorID,
+    dvendedor_sk,
     codigo_vendedor,
     nome_vendedor,
     salario_fixo,
@@ -55,7 +55,7 @@ def insertTableBI(connPar, dfPar):
     cur = connPar.cursor()  
     for _, row in dfPar.iterrows():
       # Necessário para inserir somente IDs que  ainda não estão no banco de dados.
-      cur.execute("SELECT dvendedorID FROM bi_dvendedores where codigo_vendedor = %s", (row['codigo_vendedor'],))
+      cur.execute("SELECT dvendedor_sk FROM bi_dvendedores where codigo_vendedor = %s", (row['codigo_vendedor'],))
       existing_id = cur.fetchone()    
       if existing_id == None:
         cur.execute(insert_query, (

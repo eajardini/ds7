@@ -19,7 +19,7 @@ db_params = {
 
 create_table_query = '''
 CREATE TABLE IF NOT EXISTS bi_dprodutos (
-    dprodutoID BIGSERIAL PRIMARY KEY,
+    dproduto_sk BIGSERIAL PRIMARY KEY,
     codigo_produto integer, 
     unidade char(5), 
     descricao varchar, 
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS bi_dprodutos (
 
 insert_query = '''
 INSERT INTO bi_dprodutos (
-  dprodutoID,
+  dproduto_sk,
   codigo_produto,
   unidade,
   descricao,
@@ -54,7 +54,8 @@ def createTableBI(connPar):
   try:
     cur = connPar.cursor()
     cur.execute(create_table_query)
-
+    connPar.commit()
+    cur.close()
     return 1
   except Exception as e:
     print(f"[loadProduto.py|executeTransform] Ocorreu um erro: {e}")
@@ -66,7 +67,7 @@ def insertTableBI(connPar, dfPar):
     cur = connPar.cursor()  
     for _, row in dfPar.iterrows():
       # Necessário para inserir somente IDs que  ainda não estão no banco de dados.
-      cur.execute("SELECT dprodutoID FROM bi_dprodutos where codigo_produto = %s", (row['codigo_produto'],))
+      cur.execute("SELECT dproduto_sk FROM bi_dprodutos where codigo_produto = %s", (row['codigo_produto'],))
       existing_id = cur.fetchone()    
       if existing_id == None:
         cur.execute(insert_query, (
