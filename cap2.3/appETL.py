@@ -23,7 +23,7 @@ from c_load.loadTempo  import executeLoad as tempoExecuteLoad
 # ETL Pedido
 from a_extract.extPedido import executeExtract as pedExecuteExtract
 from b_transform.transPedido import executeTransform as pedExecuteTransform
-# from c_load.loadProduto  import executeLoad as prodExecuteLoad
+from c_load.loadPedido  import executeLoad as pedExecuteLoad
 
 
 
@@ -188,15 +188,15 @@ else:
     print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
 
 
-##### Chama a função para CARREGAR os dados bo banco de dados
-####df_prodResults = prodExecuteLoad(df_prodResults)
-####
-##### Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
-####if df_prodResults is None:
-####    print("[appETLpy] Falha a executar o carregamento para o banco de dados de PRODUTOS")
-####    quit()
-##### else:    
-#####     print (f"Valor do DF após carregamento no banco de dados: ")
-####
+# Chama a função para CARREGAR os dados bo banco de dados
+df_pedResults = pedExecuteLoad(df_pedResults)
+
+# Mostra os dados do DataFrame. Essa parte não é obrigatório. Apenas para Visulização. Defe ser retira na versão de produção
+if df_pedResults is None:
+    print("[appETLpy] Falha a executar o carregamento para o banco de dados de PRODUTOS")
+    quit()
+# else:    
+#     print (f"Valor do DF após carregamento no banco de dados: ")
+
 
 

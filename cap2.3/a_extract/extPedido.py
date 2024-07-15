@@ -20,7 +20,8 @@ query = """
     SELECT p.num_pedido , data_pedido, codigo_cliente, codigo_vendedor, codigo_produto , quantidade , 
     valor_venda , valor_custo 
     FROM pedido p, item_pedido ip
-    where p.num_pedido = ip.num_pedido;
+    where p.num_pedido = ip.num_pedido
+    and (valor_venda is not null or valor_custo is not null);
 """
 
 def executeExtract():
