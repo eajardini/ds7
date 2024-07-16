@@ -1,4 +1,4 @@
-# ./ds7/cap2.3/01_extCliente
+# cap2.3/appETL.py
 
 import pandas as pd
 
@@ -24,11 +24,6 @@ from c_load.loadTempo  import executeLoad as tempoExecuteLoad
 from a_extract.extPedido import executeExtract as pedExecuteExtract
 from b_transform.transPedido import executeTransform as pedExecuteTransform
 from c_load.loadPedido  import executeLoad as pedExecuteLoad
-
-
-
-
-
 
 #******** ETL CLIENTE *******
 # Chama a função para EXTRAIR os dados
@@ -64,6 +59,9 @@ if df_cliResults is None:
     quit()
 # else:    
 #     print (f"Valor do DF após carregamento no banco de dados: ")
+
+
+
 
 
 #******** ETL VENDEDOR *******
@@ -170,10 +168,10 @@ df_pedResults = pedExecuteExtract()
 if df_pedResults is None:
     print("[appETLpy] Falha a executar a extração de PEDIDOS")
     quit()
-else:  
-    print(f"Valor do DF após extração Head: \n {df_pedResults.head()}")  
-    print(f"Valor do DF após extração NULLs: \n {df_pedResults[df_pedResults.isnull().any(axis=1)]}")
-    print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
+# else:  
+#     print(f"Valor do DF após extração Head: \n {df_pedResults.head()}")  
+#     print(f"Valor do DF após extração NULLs: \n {df_pedResults[df_pedResults.isnull().any(axis=1)]}")
+#     print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
 
 
 # Chama a função para TRANSFORMAR os dados
@@ -183,9 +181,9 @@ df_pedResults = pedExecuteTransform(df_pedResults)
 if df_pedResults is None:
     print("[appETLpy] Falha a executar a transformação de PEDIDOS")
     quit()
-else:    
-    print(f"Valor do DF após transformação: \n {df_pedResults.head()}")
-    print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
+# else:    
+#     print(f"Valor do DF após transformação: \n {df_pedResults.head()}")
+#     print(f"Valor do DF após extração Total NULLs: {df_pedResults.isnull().any(axis=1).sum()}")
 
 
 # Chama a função para CARREGAR os dados bo banco de dados
@@ -197,6 +195,3 @@ if df_pedResults is None:
     quit()
 # else:    
 #     print (f"Valor do DF após carregamento no banco de dados: ")
-
-
-

@@ -15,12 +15,6 @@ db_params = {
     'port': os.getenv('DB_PORT'),
 }
 
-# db_name = os.getenv('DB_NAME_ERP')
-# db_user = os.getenv('DB_USER')
-# db_password = os.getenv('DB_PASSWORD')
-# db_host = os.getenv('DB_HOST')
-# db_port = os.getenv('DB_PORT')
-
 # Define a consulta SQL
 query = """
 SELECT codigo_cliente, nome_cliente, endereco, cidade, cep, uf 
@@ -52,12 +46,8 @@ def executeExtract():
         cur.close()
         conn.close()
         
+        # Retornou o Dataframe
         return df
     except Exception as e:
         print(f"[extCliente.py|executeExtract] Ocorreu um erro: {e}")
         return None
-
-
-
-
-

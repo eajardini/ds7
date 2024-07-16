@@ -107,6 +107,7 @@ def executeLoad(dfPar):
     createTableBI(conn)
     insertTableBI(conn, dfPar)
 
+    conn.close()
     return dfPar
   except Exception as e:
         print(f"[loadPedido.py|executeTransform] Ocorreu um erro: {e}")

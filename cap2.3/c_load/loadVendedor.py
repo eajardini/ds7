@@ -81,6 +81,7 @@ def executeLoad(dfPar):
     createTableBI(conn)
     insertTableBI(conn, dfPar)
 
+    conn.close()
     return dfPar
   except Exception as e:
         print(f"[loadVendedor.py|executeTransform] Ocorreu um erro: {e}")

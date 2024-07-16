@@ -95,6 +95,7 @@ def executeLoad(dfPar):
     conn = psycopg2.connect(**db_params)    
     createTableBI(conn)
     insertTableBI(conn, dfPar)
+    conn.close()
 
     return dfPar
   except Exception as e:

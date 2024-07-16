@@ -1,0 +1,1 @@
+/opt/bi/pandas/venvETL/bin/python /opt/bi/pandas/ds7/cap2.3/appETL.py

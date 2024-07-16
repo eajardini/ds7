@@ -5,7 +5,6 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-
 ## Load
 # Parâmetros de conexão
 load_dotenv()
@@ -42,7 +41,6 @@ INSERT INTO bi_dclientes (
 VALUES (default, %s, %s, %s, %s, %s, %s)
 '''
 
-
 def createTableBI(connPar):   
   try:
     cur = connPar.cursor()
@@ -53,7 +51,6 @@ def createTableBI(connPar):
   except Exception as e:
     print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
     return None
-
 
 def insertTableBI(connPar, dfPar): 
   try:
@@ -78,7 +75,6 @@ def insertTableBI(connPar, dfPar):
   connPar.commit()
   return 1
 
-
 def executeLoad(dfPar):  
   try:
     print(f"Etapa: Carregando Clientes para o banco de dados")
@@ -87,6 +83,7 @@ def executeLoad(dfPar):
     createTableBI(conn)
     insertTableBI(conn, dfPar)
 
+    conn.close()
     return dfPar
   except Exception as e:
         print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")

@@ -1,3 +1,5 @@
+# ./cap2.2/appAPI02.py
+
 import pandas as pd
 import requests
 import psycopg2
@@ -8,7 +10,7 @@ apiURLProdutosEstatisticas = "https://servicodados.ibge.gov.br/api/v1/produtos/e
 ## Extract
 response = requests.get(apiURLProdutosEstatisticas)
 
-# Check if the request was successful
+# Verifica se a requisição foi realizada com sucesso
 if response.status_code == 200:
     data = response.json()
 else:

@@ -2,8 +2,6 @@
 
 import pandas as pd
 
-
-
 def executeTransform(dfPar):
 
   try:

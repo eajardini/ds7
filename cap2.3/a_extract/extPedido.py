@@ -17,11 +17,10 @@ db_params = {
 
 # Define a consulta SQL
 query = """
-    SELECT p.num_pedido , data_pedido, codigo_cliente, codigo_vendedor, codigo_produto , quantidade , 
-    valor_venda , valor_custo 
+    SELECT p.num_pedido, data_pedido, codigo_cliente, codigo_vendedor, codigo_produto, quantidade, 
+    valor_venda, valor_custo 
     FROM pedido p, item_pedido ip
-    where p.num_pedido = ip.num_pedido
-    and (valor_venda is not null or valor_custo is not null);
+    where p.num_pedido = ip.num_pedido;    
 """
 
 def executeExtract():

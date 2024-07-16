@@ -750,8 +750,8 @@ WITH prazoEntrega_list AS (
 ),  totalPedido_list AS (
     SELECT '{150, 2000, 3040, 1560, 7000, 2000}'::int[] listaTotalPedido
 ),  dataPedido_list AS (
-    SELECT '{30/04/2020, 20/04/2020, 10/05/2021 , 10/06/2021, 
-	         05/09/2022, 25/09/2022, 03/11/2022, 23/03/2021}'::date[] listaDataPedido
+    SELECT '{30/04/2022, 20/04/2022, 10/05/2023 , 10/06/2023, 
+	         05/09/2024, 25/09/2024, 03/11/2024, 23/03/2025}'::date[] listaDataPedido
 ) 
 insert into pedido
 SELECT ped,         
