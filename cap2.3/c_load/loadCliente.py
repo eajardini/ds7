@@ -47,9 +47,10 @@ def createTableBI(connPar):
     cur.execute(create_table_query)
     connPar.commit()
     cur.close()
+    
     return 1
   except Exception as e:
-    print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
+    print(f"[loadCliente.py|createTableBI] Ocorreu um erro: {e}")
     return None
 
 def insertTableBI(connPar, dfPar): 
@@ -60,9 +61,7 @@ def insertTableBI(connPar, dfPar):
       # Necessário para inserir somente IDs que  ainda não estão no banco de dados.      
       cur.execute("SELECT dcliente_sk FROM bi_dclientes where codigo_cliente = %s", (row['codigo_cliente'],))
       existing_id = cur.fetchone()    
-      if existing_id == None:
-        iii = iii+1
-        print(f"Passei: {iii}")
+      if existing_id == None:        
         cur.execute(insert_query, (
             row['codigo_cliente'],
             row['nome_cliente'],
@@ -72,10 +71,10 @@ def insertTableBI(connPar, dfPar):
             row['uf']                    
       ))
   except Exception as e:
-        print(f"[loadCliente.py|executeTransform] Ocorreu um erro: {e}")
+        print(f"[loadCliente.py|insertTableBI] Ocorreu um erro: {e}")
         return None
 
-  connPar.commit()
+  connPar.commit()  
   return 1
 
 def executeLoad(dfPar):  

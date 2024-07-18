@@ -45,6 +45,7 @@ def createTableBI(connPar):
     cur.execute(create_table_query)
     connPar.commit()
     cur.close()
+    
     return 1
   except Exception as e:
     print(f"[loadVendedor.py|executeTransform] Ocorreu um erro: {e}")
