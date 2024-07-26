@@ -837,6 +837,16 @@ set lc_time  TO 'pt_BR.UTF-8';
 
 -- commit;
 
+
+-- Select para consulta no Looker
+-- select c.nome_cliente, c.cidade, c.uf ,v.nome_vendedor, p.data_pedido, 
+-- pro.descricao, t.nomediasemana, p.num_pedido,p.quantidade, p.valor_custo, p.valor_venda 
+-- from bi_dclientes c, bi_dvendedores v,bi_dprodutos pro, bi_fpedidos p ,bi_dtempo t 
+-- where c.dcliente_sk = p.dcliente_skfk
+--   and v.dvendedor_sk = p.dvendedor_skfk
+--   and pro.dproduto_sk = p.dproduto_skfk
+--   and t.data = p.data_pedido;
+
 GRANT select ON ALL TABLES IN SCHEMA public TO userds7;
 
 ----------------------------------------------------------------------------
