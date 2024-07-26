@@ -1,7 +1,7 @@
 
 
 -- Cria o usuário do curso
-CREATE USER userds7 WITH ENCRYPTED PASSWORD 'postdbasql12';
+CREATE USER userds7 WITH ENCRYPTED PASSWORD 'XXXXXX';
 
 /*
 1)Para cada usuário que irá se conectar remotamente, deverá ser criado
